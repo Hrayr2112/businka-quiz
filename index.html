@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Квиз ко Дню Рождения Булочки</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #fff;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 420px;
+    min-height: 100dvh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .screen {
+    display: none;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.4s ease;
+  }
+  .screen.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== WELCOME ===== */
+  .welcome-subtitle {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: #666;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .welcome-title { text-align: center; margin-bottom: 8px; }
+  .welcome-title .line1 {
+    font-size: 42px; font-weight: 900; color: #f59e0b; display: block; line-height: 1.1;
+  }
+  .welcome-title .line2 {
+    font-size: 28px; font-weight: 700; color: #fff; display: block; line-height: 1.2;
+  }
+  .welcome-title .line3 {
+    font-size: 42px; font-weight: 900; color: #f59e0b; display: block; line-height: 1.1;
+  }
+  .welcome-meta {
+    font-size: 13px; color: #888; margin: 16px 0 30px;
+  }
+  .prize-card {
+    background: #fff; border-radius: 16px; padding: 24px;
+    margin-bottom: 10px; display: flex; flex-direction: column;
+    align-items: center; width: 200px;
+  }
+  .prize-island {
+    font-size: 72px; margin-bottom: 12px;
+  }
+  .prize-label {
+    font-size: 10px; letter-spacing: 2px; color: #999;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .prize-name { font-size: 18px; font-weight: 700; color: #111; }
+  .prize-color { font-size: 13px; color: #f97316; }
+
+  .bonus-hint {
+    font-size: 13px; color: #f59e0b; margin: 12px 0 8px;
+    background: #1a1a0a; border: 1px solid #f59e0b33;
+    padding: 8px 16px; border-radius: 12px;
+  }
+  .dots { display: flex; gap: 6px; margin: 16px 0 30px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #333; }
+  .dot.active { background: #fff; }
+
+  .btn-start {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #fff; border: none; padding: 16px 48px; border-radius: 40px;
+    font-size: 16px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; gap: 10px; letter-spacing: 1px;
+    box-shadow: 0 4px 24px rgba(249, 115, 22, 0.4);
+  }
+  .btn-start:active { transform: scale(0.96); }
+  .play-icon {
+    width: 0; height: 0; border-style: solid;
+    border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent #fff;
+  }
+
+  /* ===== QUESTION ===== */
+  .question-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+  .question-badge {
+    background: #1a1a2e; border: 1px solid #2a2a3e; border-radius: 20px;
+    padding: 6px 16px; font-size: 11px; letter-spacing: 3px;
+    color: #888; text-transform: uppercase;
+  }
+  .score-badge {
+    background: #0a2e1a; border: 1px solid #16a34a; border-radius: 20px;
+    padding: 6px 12px; font-size: 11px; color: #4ade80; font-weight: 600;
+  }
+  .question-text {
+    font-size: 20px; font-weight: 600; text-align: center;
+    line-height: 1.4; margin-bottom: 24px; max-width: 340px;
+  }
+  .timer-container {
+    position: relative; width: 56px; height: 56px; margin-bottom: 4px;
+  }
+  .timer-ring { transform: rotate(-90deg); }
+  .timer-ring-bg { fill: none; stroke: #1a1a2e; stroke-width: 3; }
+  .timer-ring-progress {
+    fill: none; stroke: #f97316; stroke-width: 3;
+    stroke-linecap: round; transition: stroke-dashoffset 1s linear;
+  }
+  .timer-number {
+    position: absolute; inset: 0; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 700;
+  }
+  .timer-label {
+    font-size: 10px; letter-spacing: 2px; color: #666;
+    text-transform: uppercase; margin-bottom: 40px;
+  }
+  .options { width: 100%; display: flex; flex-direction: column; gap: 12px; }
+  .option {
+    background: #12121e; border: 1px solid #1e1e30; border-radius: 14px;
+    padding: 16px 20px; display: flex; align-items: center; gap: 14px;
+    cursor: pointer; transition: all 0.3s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .option:active { transform: scale(0.98); }
+  .option .letter {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #1a1a2e; border: 1px solid #2a2a3e;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: #888; flex-shrink: 0;
+  }
+  .option .text { font-size: 15px; color: #ccc; line-height: 1.3; }
+  .option.correct { background: #0a2e1a; border-color: #16a34a; }
+  .option.correct .letter { background: #16a34a; border-color: #16a34a; color: #fff; }
+  .option.correct .text { color: #fff; }
+  .option.wrong { background: #2e0a0a; border-color: #dc2626; }
+  .option.wrong .letter { background: #dc2626; border-color: #dc2626; color: #fff; }
+  .option.wrong .text { color: #fff; }
+  .option.disabled { pointer-events: none; }
+
+  /* ===== FINAL ===== */
+  .final-icon { font-size: 64px; margin-bottom: 16px; }
+  .final-title {
+    font-size: 28px; font-weight: 800; text-align: center;
+    margin-bottom: 8px;
+  }
+  .final-sub {
+    font-size: 16px; color: #888; text-align: center; margin-bottom: 8px;
+  }
+  .final-score {
+    font-size: 48px; font-weight: 900; margin: 16px 0;
+  }
+  .final-label {
+    font-size: 14px; color: #888; margin-bottom: 24px;
+  }
+  .result-bar-container {
+    width: 100%; height: 12px; background: #1a1a2e;
+    border-radius: 6px; margin-bottom: 32px; overflow: hidden;
+  }
+  .result-bar {
+    height: 100%; border-radius: 6px;
+    transition: width 1.5s ease;
+  }
+  .bonus-result {
+    background: linear-gradient(135deg, #f59e0b22, #f9731622);
+    border: 1px solid #f59e0b;
+    border-radius: 16px; padding: 16px 24px;
+    text-align: center; margin-bottom: 24px;
+    font-size: 15px; font-weight: 600; color: #f59e0b;
+    line-height: 1.5; display: none;
+  }
+  .bonus-result.visible { display: block; animation: fadeIn 0.5s ease; }
+  .btn-share {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #fff; border: none; padding: 16px 48px; border-radius: 40px;
+    font-size: 16px; font-weight: 700; cursor: pointer;
+    letter-spacing: 1px; box-shadow: 0 4px 24px rgba(249, 115, 22, 0.4);
+    margin-bottom: 16px;
+  }
+  .btn-share:active { transform: scale(0.96); }
+  .btn-retry {
+    background: transparent; color: #888; border: 1px solid #333;
+    padding: 14px 40px; border-radius: 40px; font-size: 14px;
+    font-weight: 600; cursor: pointer;
+  }
+  .btn-retry:active { transform: scale(0.96); }
+
+  /* ===== CONFETTI ===== */
+  .confetti-container {
+    position: fixed; inset: 0; pointer-events: none;
+    z-index: 100; overflow: hidden;
+  }
+  .confetti-piece {
+    position: absolute; width: 8px; height: 8px; top: -10px;
+    animation: confettiFall 3s ease-in forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-bar-container {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 4px; background: #1a1a2e; z-index: 50;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #f97316, #f59e0b);
+    transition: width 0.5s ease; border-radius: 0 2px 2px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-container">
+  <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+</div>
+
+<div class="app">
+
+  <!-- WELCOME -->
+  <div class="screen active" id="welcomeScreen">
+    <div class="welcome-subtitle">КВИЗ КО ДНЮ РОЖДЕНИЯ БУЛОЧКИ</div>
+    <div class="welcome-title">
+      <span class="line1">ЗНАЕШЬ</span>
+      <span class="line2">ЛИ ТЫ</span>
+      <span class="line3">БУСИНКУ?</span>
+    </div>
+    <div class="welcome-meta">50 вопросов · 1 правильный путь · 1 большой приз</div>
+    <div class="prize-card">
+      <div class="prize-island">🏝️</div>
+      <div class="prize-label">ГЛАВНЫЙ ПРИЗ</div>
+      <div class="prize-name">Поездка</div>
+      <div class="prize-color">На остров мечты 🌊</div>
+    </div>
+    <div class="bonus-hint">40+ правильных = бонусный приз 🎁</div>
+    <div class="dots">
+      <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+    <button class="btn-start" onclick="startGame()">
+      <div class="play-icon"></div>
+      НАЧАТЬ ИГРУ
+    </button>
+  </div>
+
+  <!-- QUESTION -->
+  <div class="screen" id="questionScreen">
+    <div class="question-header">
+      <div class="question-badge" id="questionBadge">ВОПРОС 1</div>
+      <div class="score-badge" id="scoreBadge">✓ 0</div>
+    </div>
+    <div class="question-text" id="questionText"></div>
+    <div class="timer-container">
+      <svg class="timer-ring" width="56" height="56" viewBox="0 0 56 56">
+        <circle class="timer-ring-bg" cx="28" cy="28" r="24"/>
+        <circle class="timer-ring-progress" id="timerRing" cx="28" cy="28" r="24"
+          stroke-dasharray="150.8" stroke-dashoffset="0"/>
+      </svg>
+      <div class="timer-number" id="timerNumber">15</div>
+    </div>
+    <div class="timer-label">СЕКУНД</div>
+    <div class="options" id="optionsContainer"></div>
+  </div>
+
+  <!-- FINAL -->
+  <div class="screen" id="finalScreen">
+    <div class="final-icon" id="finalIcon">🏆</div>
+    <div class="final-title" id="finalTitle"></div>
+    <div class="final-sub" id="finalSub"></div>
+    <div class="final-score" id="finalScore"></div>
+    <div class="final-label">правильных из 50</div>
+    <div class="result-bar-container">
+      <div class="result-bar" id="resultBar" style="width: 0%"></div>
+    </div>
+    <div class="bonus-result" id="bonusResult"></div>
+    <button class="btn-share" onclick="shareResult()">ПОДЕЛИТЬСЯ 🎉</button>
+    <button class="btn-retry" onclick="restartGame()">ПРОЙТИ ЕЩЁ РАЗ</button>
+  </div>
+
+</div>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+const questions = [
+  {
+    text: "Бусинка собирается на выход. Сколько времени ей нужно?",
+    options: [
+      { letter: "A", text: "15 минут — быстро и красиво", correct: false },
+      { letter: "B", text: "«Ещё 5 минут» × 10 раз ⏰", correct: true },
+      { letter: "C", text: "Она всегда готова заранее", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка говорит «я не голодная». Это значит:",
+    options: [
+      { letter: "A", text: "Реально не голодная", correct: false },
+      { letter: "B", text: "Будет есть из твоей тарелки 🍽️", correct: true },
+      { letter: "C", text: "Через 10 минут попросит заехать за едой", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка увидела милого кота на улице. Она:",
+    options: [
+      { letter: "A", text: "«КОТИИИК!» и бежит гладить 🐱", correct: true },
+      { letter: "B", text: "Фоткает издалека", correct: false },
+      { letter: "C", text: "Проходит мимо", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка злится. Лучшая стратегия:",
+    options: [
+      { letter: "A", text: "Обнять и молчать 🤐", correct: true },
+      { letter: "B", text: "Спросить «что случилось?»", correct: false },
+      { letter: "C", text: "Дать ей время остыть", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка выбирает что посмотреть. Это будет:",
+    options: [
+      { letter: "A", text: "Романтический фильм 💕", correct: true },
+      { letter: "B", text: "True crime документалка", correct: false },
+      { letter: "C", text: "То же самое что и в прошлый раз", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка в магазине одежды. Сколько вы там пробудете?",
+    options: [
+      { letter: "A", text: "20 минут — она знает что хочет", correct: false },
+      { letter: "B", text: "2 часа минимум 🛍️", correct: true },
+      { letter: "C", text: "Пока магазин не закроется", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка говорит «мне всё равно где ужинать». Это значит:",
+    options: [
+      { letter: "A", text: "Реально всё равно", correct: false },
+      { letter: "B", text: "У неё уже есть конкретное место", correct: true },
+      { letter: "C", text: "Она хочет чтобы ты угадал", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка делает селфи. Сколько попыток?",
+    options: [
+      { letter: "A", text: "1-2 фото, и готово", correct: false },
+      { letter: "B", text: "Минимум 30, потом выберет первое 📸", correct: true },
+      { letter: "C", text: "Она не делает селфи", correct: false }
+    ]
+  },
+  {
+    text: "Что Бусинка делает перед сном?",
+    options: [
+      { letter: "A", text: "Уходовые процедуры 30 минут 🧴", correct: true },
+      { letter: "B", text: "Сразу засыпает", correct: false },
+      { letter: "C", text: "Листает TikTok до 3 ночи", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка заболела. Температура 37.0. Её поведение:",
+    options: [
+      { letter: "A", text: "Работает как обычно", correct: false },
+      { letter: "B", text: "Полный постельный режим + сериалы 🤒", correct: true },
+      { letter: "C", text: "«Я умираю, принеси чай»", correct: false }
+    ]
+  },
+  {
+    text: "Любимая фраза Бусинки:",
+    options: [
+      { letter: "A", text: "«Я люблю тебя» ❤️", correct: false },
+      { letter: "B", text: "«А ты меня любишь?»", correct: true },
+      { letter: "C", text: "«Купи мне кофе»", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка плачет в кино. По какому поводу?",
+    options: [
+      { letter: "A", text: "Грустная сцена 😢", correct: false },
+      { letter: "B", text: "Умерла собака в фильме", correct: false },
+      { letter: "C", text: "Любая мало-мальски трогательная сцена", correct: true }
+    ]
+  },
+  {
+    text: "Бусинка и шкаф. Одежды:",
+    options: [
+      { letter: "A", text: "Мало, всё по капсулам", correct: false },
+      { letter: "B", text: "Полный шкаф, но «нечего надеть» 👗", correct: true },
+      { letter: "C", text: "Ровно столько сколько нужно", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка просит сфоткать её. Ты должен:",
+    options: [
+      { letter: "A", text: "Снять с первого раза", correct: false },
+      { letter: "B", text: "Снять 100 фото с разных ракурсов 📱", correct: true },
+      { letter: "C", text: "Предложить сделать селфи вместе", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка на диете. Что произойдёт?",
+    options: [
+      { letter: "A", text: "Продержится месяц 💪", correct: false },
+      { letter: "B", text: "Три дня, потом «мне нужен шоколад»", correct: true },
+      { letter: "C", text: "Перетянет тебя на диету тоже", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка в плохом настроении. Что поможет?",
+    options: [
+      { letter: "A", text: "Цветы 🌸", correct: false },
+      { letter: "B", text: "Вкусная еда", correct: true },
+      { letter: "C", text: "Оставить в покое", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и навигатор. Как она ориентируется?",
+    options: [
+      { letter: "A", text: "Идеально, лучше GPS 🧭", correct: false },
+      { letter: "B", text: "«Поверни туда... нет, не туда!»", correct: true },
+      { letter: "C", text: "Полностью доверяет навигатору", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка готовит. Результат:",
+    options: [
+      { letter: "A", text: "Шедевр, достойный ресторана 👩‍🍳", correct: true },
+      { letter: "B", text: "Съедобно, но кухня в руинах", correct: false },
+      { letter: "C", text: "Она не готовит", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка увидела паука. Реакция:",
+    options: [
+      { letter: "A", text: "Спокойно выносит на улицу", correct: false },
+      { letter: "B", text: "Визг + «УБЕЙ ЕГО!!!» 🕷️", correct: true },
+      { letter: "C", text: "Фотографирует для инстаграма", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка едет в отпуск. Чемодан:",
+    options: [
+      { letter: "A", text: "Один маленький, всё продумано", correct: false },
+      { letter: "B", text: "Два огромных + ручная кладь", correct: true },
+      { letter: "C", text: "Купит всё на месте", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка опаздывает. Что она скажет?",
+    options: [
+      { letter: "A", text: "«Уже выхожу!» (ещё в халате)", correct: true },
+      { letter: "B", text: "Честно скажет сколько ещё нужно", correct: false },
+      { letter: "C", text: "Она никогда не опаздывает", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и комплименты. Как реагирует?",
+    options: [
+      { letter: "A", text: "«Спасибо!» и улыбается", correct: false },
+      { letter: "B", text: "«Да ладно, перестань» (но ей приятно) 😊", correct: true },
+      { letter: "C", text: "Не верит ни одному слову", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка выбирает блюдо в ресторане. Стратегия:",
+    options: [
+      { letter: "A", text: "Быстро, уже знает что хочет", correct: false },
+      { letter: "B", text: "Читает всё меню + спросит у официанта", correct: true },
+      { letter: "C", text: "«Мне то же что и тебе»", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и уборка дома. Как это выглядит?",
+    options: [
+      { letter: "A", text: "Генеральная уборка каждые выходные", correct: true },
+      { letter: "B", text: "Убирает только когда ждёт гостей", correct: false },
+      { letter: "C", text: "«Это твоя очередь» 😏", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка в очереди за кофе. Она закажет:",
+    options: [
+      { letter: "A", text: "Обычный капучино", correct: false },
+      { letter: "B", text: "Что-то с 5 добавками и особым молоком ☕", correct: true },
+      { letter: "C", text: "Чай", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и шопинг онлайн. Корзина:",
+    options: [
+      { letter: "A", text: "Только нужные вещи", correct: false },
+      { letter: "B", text: "Полная, но «я подумаю» и ничего не купит", correct: false },
+      { letter: "C", text: "Полная, и всё купит 🛒", correct: true }
+    ]
+  },
+  {
+    text: "Как Бусинка будит тебя утром?",
+    options: [
+      { letter: "A", text: "Нежно, поцелуем 💋", correct: true },
+      { letter: "B", text: "«ВСТАВАЙ, ОПАЗДЫВАЕМ!»", correct: false },
+      { letter: "C", text: "Никак, спит дольше тебя", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и фитнес. Мотивация:",
+    options: [
+      { letter: "A", text: "Здоровье и энергия", correct: false },
+      { letter: "B", text: "Фото в зеркале для сторис 💪", correct: true },
+      { letter: "C", text: "Она не ходит в зал", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка танцует. Как это выглядит?",
+    options: [
+      { letter: "A", text: "Профессионально, как в клипе 💃", correct: true },
+      { letter: "B", text: "Мило, но не в ритм", correct: false },
+      { letter: "C", text: "Она стесняется танцевать", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка обиделась. Как ты узнаешь?",
+    options: [
+      { letter: "A", text: "Скажет прямо", correct: false },
+      { letter: "B", text: "«Всё нормально» (ничего не нормально) 😤", correct: true },
+      { letter: "C", text: "Ты никогда не узнаешь", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и новый тренд в соцсетях. Она:",
+    options: [
+      { letter: "A", text: "Первая попробует 📱", correct: true },
+      { letter: "B", text: "Подождёт пока все сделают", correct: false },
+      { letter: "C", text: "Ей всё равно на тренды", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка выбирает подарок тебе. Стратегия:",
+    options: [
+      { letter: "A", text: "Спросит напрямую что хочешь", correct: false },
+      { letter: "B", text: "Запомнит все твои намёки за полгода 🎁", correct: true },
+      { letter: "C", text: "Подарит что-то для себя", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и утренний кофе. Без него она:",
+    options: [
+      { letter: "A", text: "Нормально функционирует", correct: false },
+      { letter: "B", text: "Лучше не подходить ☕", correct: true },
+      { letter: "C", text: "Пьёт чай вместо кофе", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка на вечеринке. Через 2 часа она:",
+    options: [
+      { letter: "A", text: "Душа компании, танцует до утра 🎤", correct: true },
+      { letter: "B", text: "«Может домой?»", correct: false },
+      { letter: "C", text: "Сидит в телефоне", correct: false }
+    ]
+  },
+  {
+    text: "Первый поцелуй с Бусинкой был в:",
+    options: [
+      { letter: "A", text: "Армении", correct: true },
+      { letter: "B", text: "Турции", correct: false },
+      { letter: "C", text: "России", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка смотрит на старые фото. Реакция:",
+    options: [
+      { letter: "A", text: "«Какая я была милая» 🥰", correct: false },
+      { letter: "B", text: "«Удали это немедленно!»", correct: true },
+      { letter: "C", text: "Ностальгирует и плачет", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и сериалы. Она:",
+    options: [
+      { letter: "A", text: "Смотрит по одной серии в день", correct: false },
+      { letter: "B", text: "Весь сезон за одну ночь 🍿", correct: true },
+      { letter: "C", text: "Не смотрит сериалы", correct: false }
+    ]
+  },
+  {
+    text: "Какая суперсила была бы у Бусинки?",
+    options: [
+      { letter: "A", text: "Телепортация (не опаздывать)", correct: true },
+      { letter: "B", text: "Чтение мыслей", correct: false },
+      { letter: "C", text: "Невидимость", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и термостат. Ей:",
+    options: [
+      { letter: "A", text: "Всегда жарко 🥵", correct: false },
+      { letter: "B", text: "Всегда холодно 🥶", correct: true },
+      { letter: "C", text: "Всегда комфортно", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка говорит «купи что хочешь». Ты:",
+    options: [
+      { letter: "A", text: "Покупаешь что хочешь", correct: false },
+      { letter: "B", text: "Уточняешь 3 раза, потому что это ловушка 😅", correct: true },
+      { letter: "C", text: "Ничего не покупаешь", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка получила букет цветов. Реакция:",
+    options: [
+      { letter: "A", text: "10 фото для инстаграма 📷", correct: true },
+      { letter: "B", text: "«Зачем тратил деньги?»", correct: false },
+      { letter: "C", text: "Спокойно поставит в вазу", correct: false }
+    ]
+  },
+  {
+    text: "Как Бусинка ведёт себя за рулём?",
+    options: [
+      { letter: "A", text: "Аккуратно и по правилам", correct: false },
+      { letter: "B", text: "Уверенно, но эмоционально 🚗", correct: true },
+      { letter: "C", text: "Она не водит", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и планирование поездки. Она:",
+    options: [
+      { letter: "A", text: "Таблица в Excel + расписание по часам 📋", correct: true },
+      { letter: "B", text: "Разберёмся на месте", correct: false },
+      { letter: "C", text: "Поручит всё тебе", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка в плохом настроении. Что НЕ надо говорить?",
+    options: [
+      { letter: "A", text: "«Успокойся»", correct: true },
+      { letter: "B", text: "«Я рядом»", correct: false },
+      { letter: "C", text: "«Хочешь поговорить?»", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и новая причёска. Если тебе не нравится:",
+    options: [
+      { letter: "A", text: "Скажешь честно", correct: false },
+      { letter: "B", text: "«Вау, тебе очень идёт!» (единственный верный ответ) 😇", correct: true },
+      { letter: "C", text: "Промолчишь", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и утро выходного дня. Она:",
+    options: [
+      { letter: "A", text: "Встаёт рано, полна энергии ☀️", correct: false },
+      { letter: "B", text: "Спит до обеда", correct: true },
+      { letter: "C", text: "Встаёт, но не разговаривает до кофе", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и Instagram. Сколько фото на аватарку?",
+    options: [
+      { letter: "A", text: "Первое попавшееся", correct: false },
+      { letter: "B", text: "Выбирает из 200+ фото неделю", correct: true },
+      { letter: "C", text: "У неё нет аватарки", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка говорит «я не обижаюсь». Это значит:",
+    options: [
+      { letter: "A", text: "Реально не обижается", correct: false },
+      { letter: "B", text: "Обижается, и ты это знаешь 💀", correct: true },
+      { letter: "C", text: "Уже забыла о чём речь", correct: false }
+    ]
+  },
+  {
+    text: "Бусинка и день рождения. Она хочет:",
+    options: [
+      { letter: "A", text: "Тихий вечер вдвоём", correct: false },
+      { letter: "B", text: "Сюрприз, вечеринку и внимание 🎂", correct: true },
+      { letter: "C", text: "Просто подарок", correct: false }
+    ]
+  }
+];
+
+let currentQuestion = 0;
+let correctCount = 0;
+let timerInterval = null;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function updateProgress() {
+  document.getElementById('progressBar').style.width =
+    ((currentQuestion / questions.length) * 100) + '%';
+}
+
+function startGame() {
+  currentQuestion = 0;
+  correctCount = 0;
+  updateProgress();
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('questionBadge').textContent = `ВОПРОС ${currentQuestion + 1}`;
+  document.getElementById('scoreBadge').textContent = `✓ ${correctCount}`;
+  document.getElementById('questionText').textContent = q.text;
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const div = document.createElement('div');
+    div.className = 'option';
+    div.innerHTML = `<div class="letter">${opt.letter}</div><div class="text">${opt.text}</div>`;
+    div.addEventListener('click', () => selectOption(i));
+    container.appendChild(div);
+  });
+
+  showScreen('questionScreen');
+  startTimer();
+}
+
+function startTimer() {
+  let timeLeft = 15;
+  const ring = document.getElementById('timerRing');
+  const circumference = 150.8;
+  ring.style.transition = 'none';
+  ring.style.strokeDashoffset = '0';
+  ring.style.stroke = '#f97316';
+  document.getElementById('timerNumber').textContent = timeLeft;
+
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById('timerNumber').textContent = timeLeft;
+    ring.style.transition = 'stroke-dashoffset 1s linear';
+    ring.style.strokeDashoffset = circumference * (1 - timeLeft / 15);
+    if (timeLeft <= 5) ring.style.stroke = '#dc2626';
+
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      handleTimeout();
+    }
+  }, 1000);
+}
+
+function handleTimeout() {
+  const q = questions[currentQuestion];
+  const options = document.querySelectorAll('.option');
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (q.options[i].correct) opt.classList.add('correct');
+  });
+  setTimeout(advance, 1200);
+}
+
+function selectOption(index) {
+  clearInterval(timerInterval);
+  const q = questions[currentQuestion];
+  const options = document.querySelectorAll('.option');
+
+  options.forEach((opt, i) => {
+    opt.classList.add('disabled');
+    if (q.options[i].correct) opt.classList.add('correct');
+  });
+
+  if (q.options[index].correct) {
+    correctCount++;
+  } else {
+    options[index].classList.add('wrong');
+  }
+
+  setTimeout(advance, 1200);
+}
+
+function advance() {
+  currentQuestion++;
+  updateProgress();
+
+  if (currentQuestion >= questions.length) {
+    showFinal();
+  } else {
+    showQuestion();
+  }
+}
+
+function showFinal() {
+  document.getElementById('progressBar').style.width = '100%';
+  const pct = Math.round((correctCount / questions.length) * 100);
+
+  let icon, title, color;
+  if (correctCount >= 40) {
+    icon = '🏆'; title = 'ТЫ ЗНАЕШЬ БУСИНКУ!'; color = '#16a34a';
+  } else if (pct >= 50) {
+    icon = '😏'; title = 'НЕПЛОХО, НО МОЖНО ЛУЧШЕ'; color = '#f59e0b';
+  } else {
+    icon = '😅'; title = 'ТЫ НЕ ЗНАЕШЬ БУСИНКУ...'; color = '#dc2626';
+  }
+
+  document.getElementById('finalIcon').textContent = icon;
+  document.getElementById('finalTitle').textContent = title;
+  document.getElementById('finalTitle').style.color = color;
+  document.getElementById('finalSub').textContent = `${pct}% правильных ответов`;
+  document.getElementById('finalScore').textContent = `${correctCount} / ${questions.length}`;
+  document.getElementById('finalScore').style.color = color;
+
+  const bonus = document.getElementById('bonusResult');
+  if (correctCount >= 40) {
+    bonus.innerHTML = '🎁 Поздравляем! Ты набрал 40+!<br>Тебя ждёт <b>бонусный приз</b>! 🎉';
+    bonus.classList.add('visible');
+  } else {
+    bonus.classList.remove('visible');
+  }
+
+  showScreen('finalScreen');
+  setTimeout(() => {
+    document.getElementById('resultBar').style.width = pct + '%';
+    document.getElementById('resultBar').style.background =
+      `linear-gradient(90deg, ${color}, ${color}88)`;
+  }, 100);
+  if (correctCount >= 40) spawnConfetti();
+  else if (pct >= 50) spawnConfetti();
+}
+
+function restartGame() {
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('resultBar').style.width = '0%';
+  startGame();
+}
+
+function shareResult() {
+  const pct = Math.round((correctCount / questions.length) * 100);
+  const text = `🎂 Квиз ко Дню Рождения Булочки — ${correctCount}/${questions.length} (${pct}%)! Попробуй тоже: ${location.href}`;
+  if (navigator.share) {
+    navigator.share({ title: 'Квиз ко Дню Рождения Булочки', text });
+  } else {
+    navigator.clipboard.writeText(text).then(() => alert('Скопировано!'));
+  }
+}
+
+function spawnConfetti() {
+  const c = document.getElementById('confettiContainer');
+  c.innerHTML = '';
+  const colors = ['#f97316','#f59e0b','#ef4444','#8b5cf6','#3b82f6','#10b981','#ec4899'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random()*100+'%';
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    p.style.animationDelay = Math.random()*0.8+'s';
+    p.style.animationDuration = (2+Math.random()*2)+'s';
+    p.style.width = (4+Math.random()*6)+'px';
+    p.style.height = (4+Math.random()*6)+'px';
+    p.style.borderRadius = Math.random()>0.5?'50%':'2px';
+    c.appendChild(p);
+  }
+  setTimeout(() => c.innerHTML='', 4000);
+}
+</script>
+
+</body>
+</html>
