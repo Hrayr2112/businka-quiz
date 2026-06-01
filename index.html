@@ -309,398 +309,206 @@
 
 <script>
 const questions = [
-  {
-    text: "Бусинка собирается на выход. Сколько времени ей нужно?",
-    options: [
-      { letter: "A", text: "15 минут — быстро и красиво", correct: false },
-      { letter: "B", text: "«Ещё 5 минут» × 10 раз ⏰", correct: true },
-      { letter: "C", text: "Она всегда готова заранее", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка говорит «я не голодная». Это значит:",
-    options: [
-      { letter: "A", text: "Реально не голодная", correct: false },
-      { letter: "B", text: "Будет есть из твоей тарелки 🍽️", correct: true },
-      { letter: "C", text: "Через 10 минут попросит заехать за едой", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка увидела милого кота на улице. Она:",
-    options: [
-      { letter: "A", text: "«КОТИИИК!» и бежит гладить 🐱", correct: true },
-      { letter: "B", text: "Фоткает издалека", correct: false },
-      { letter: "C", text: "Проходит мимо", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка злится. Лучшая стратегия:",
-    options: [
-      { letter: "A", text: "Обнять и молчать 🤐", correct: true },
-      { letter: "B", text: "Спросить «что случилось?»", correct: false },
-      { letter: "C", text: "Дать ей время остыть", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка выбирает что посмотреть. Это будет:",
-    options: [
-      { letter: "A", text: "Романтический фильм 💕", correct: true },
-      { letter: "B", text: "True crime документалка", correct: false },
-      { letter: "C", text: "То же самое что и в прошлый раз", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка в магазине одежды. Сколько вы там пробудете?",
-    options: [
-      { letter: "A", text: "20 минут — она знает что хочет", correct: false },
-      { letter: "B", text: "2 часа минимум 🛍️", correct: true },
-      { letter: "C", text: "Пока магазин не закроется", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка говорит «мне всё равно где ужинать». Это значит:",
-    options: [
-      { letter: "A", text: "Реально всё равно", correct: false },
-      { letter: "B", text: "У неё уже есть конкретное место", correct: true },
-      { letter: "C", text: "Она хочет чтобы ты угадал", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка делает селфи. Сколько попыток?",
-    options: [
-      { letter: "A", text: "1-2 фото, и готово", correct: false },
-      { letter: "B", text: "Минимум 30, потом выберет первое 📸", correct: true },
-      { letter: "C", text: "Она не делает селфи", correct: false }
-    ]
-  },
-  {
-    text: "Что Бусинка делает перед сном?",
-    options: [
-      { letter: "A", text: "Уходовые процедуры 30 минут 🧴", correct: true },
-      { letter: "B", text: "Сразу засыпает", correct: false },
-      { letter: "C", text: "Листает TikTok до 3 ночи", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка заболела. Температура 37.0. Её поведение:",
-    options: [
-      { letter: "A", text: "Работает как обычно", correct: false },
-      { letter: "B", text: "Полный постельный режим + сериалы 🤒", correct: true },
-      { letter: "C", text: "«Я умираю, принеси чай»", correct: false }
-    ]
-  },
-  {
-    text: "Любимая фраза Бусинки:",
-    options: [
-      { letter: "A", text: "«Я люблю тебя» ❤️", correct: false },
-      { letter: "B", text: "«А ты меня любишь?»", correct: true },
-      { letter: "C", text: "«Купи мне кофе»", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка плачет в кино. По какому поводу?",
-    options: [
-      { letter: "A", text: "Грустная сцена 😢", correct: false },
-      { letter: "B", text: "Умерла собака в фильме", correct: false },
-      { letter: "C", text: "Любая мало-мальски трогательная сцена", correct: true }
-    ]
-  },
-  {
-    text: "Бусинка и шкаф. Одежды:",
-    options: [
-      { letter: "A", text: "Мало, всё по капсулам", correct: false },
-      { letter: "B", text: "Полный шкаф, но «нечего надеть» 👗", correct: true },
-      { letter: "C", text: "Ровно столько сколько нужно", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка просит сфоткать её. Ты должен:",
-    options: [
-      { letter: "A", text: "Снять с первого раза", correct: false },
-      { letter: "B", text: "Снять 100 фото с разных ракурсов 📱", correct: true },
-      { letter: "C", text: "Предложить сделать селфи вместе", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка на диете. Что произойдёт?",
-    options: [
-      { letter: "A", text: "Продержится месяц 💪", correct: false },
-      { letter: "B", text: "Три дня, потом «мне нужен шоколад»", correct: true },
-      { letter: "C", text: "Перетянет тебя на диету тоже", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка в плохом настроении. Что поможет?",
-    options: [
-      { letter: "A", text: "Цветы 🌸", correct: false },
-      { letter: "B", text: "Вкусная еда", correct: true },
-      { letter: "C", text: "Оставить в покое", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и навигатор. Как она ориентируется?",
-    options: [
-      { letter: "A", text: "Идеально, лучше GPS 🧭", correct: false },
-      { letter: "B", text: "«Поверни туда... нет, не туда!»", correct: true },
-      { letter: "C", text: "Полностью доверяет навигатору", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка готовит. Результат:",
-    options: [
-      { letter: "A", text: "Шедевр, достойный ресторана 👩‍🍳", correct: true },
-      { letter: "B", text: "Съедобно, но кухня в руинах", correct: false },
-      { letter: "C", text: "Она не готовит", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка увидела паука. Реакция:",
-    options: [
-      { letter: "A", text: "Спокойно выносит на улицу", correct: false },
-      { letter: "B", text: "Визг + «УБЕЙ ЕГО!!!» 🕷️", correct: true },
-      { letter: "C", text: "Фотографирует для инстаграма", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка едет в отпуск. Чемодан:",
-    options: [
-      { letter: "A", text: "Один маленький, всё продумано", correct: false },
-      { letter: "B", text: "Два огромных + ручная кладь", correct: true },
-      { letter: "C", text: "Купит всё на месте", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка опаздывает. Что она скажет?",
-    options: [
-      { letter: "A", text: "«Уже выхожу!» (ещё в халате)", correct: true },
-      { letter: "B", text: "Честно скажет сколько ещё нужно", correct: false },
-      { letter: "C", text: "Она никогда не опаздывает", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и комплименты. Как реагирует?",
-    options: [
-      { letter: "A", text: "«Спасибо!» и улыбается", correct: false },
-      { letter: "B", text: "«Да ладно, перестань» (но ей приятно) 😊", correct: true },
-      { letter: "C", text: "Не верит ни одному слову", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка выбирает блюдо в ресторане. Стратегия:",
-    options: [
-      { letter: "A", text: "Быстро, уже знает что хочет", correct: false },
-      { letter: "B", text: "Читает всё меню + спросит у официанта", correct: true },
-      { letter: "C", text: "«Мне то же что и тебе»", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и уборка дома. Как это выглядит?",
-    options: [
-      { letter: "A", text: "Генеральная уборка каждые выходные", correct: true },
-      { letter: "B", text: "Убирает только когда ждёт гостей", correct: false },
-      { letter: "C", text: "«Это твоя очередь» 😏", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка в очереди за кофе. Она закажет:",
-    options: [
-      { letter: "A", text: "Обычный капучино", correct: false },
-      { letter: "B", text: "Что-то с 5 добавками и особым молоком ☕", correct: true },
-      { letter: "C", text: "Чай", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и шопинг онлайн. Корзина:",
-    options: [
-      { letter: "A", text: "Только нужные вещи", correct: false },
-      { letter: "B", text: "Полная, но «я подумаю» и ничего не купит", correct: false },
-      { letter: "C", text: "Полная, и всё купит 🛒", correct: true }
-    ]
-  },
-  {
-    text: "Как Бусинка будит тебя утром?",
-    options: [
-      { letter: "A", text: "Нежно, поцелуем 💋", correct: true },
-      { letter: "B", text: "«ВСТАВАЙ, ОПАЗДЫВАЕМ!»", correct: false },
-      { letter: "C", text: "Никак, спит дольше тебя", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и фитнес. Мотивация:",
-    options: [
-      { letter: "A", text: "Здоровье и энергия", correct: false },
-      { letter: "B", text: "Фото в зеркале для сторис 💪", correct: true },
-      { letter: "C", text: "Она не ходит в зал", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка танцует. Как это выглядит?",
-    options: [
-      { letter: "A", text: "Профессионально, как в клипе 💃", correct: true },
-      { letter: "B", text: "Мило, но не в ритм", correct: false },
-      { letter: "C", text: "Она стесняется танцевать", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка обиделась. Как ты узнаешь?",
-    options: [
-      { letter: "A", text: "Скажет прямо", correct: false },
-      { letter: "B", text: "«Всё нормально» (ничего не нормально) 😤", correct: true },
-      { letter: "C", text: "Ты никогда не узнаешь", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и новый тренд в соцсетях. Она:",
-    options: [
-      { letter: "A", text: "Первая попробует 📱", correct: true },
-      { letter: "B", text: "Подождёт пока все сделают", correct: false },
-      { letter: "C", text: "Ей всё равно на тренды", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка выбирает подарок тебе. Стратегия:",
-    options: [
-      { letter: "A", text: "Спросит напрямую что хочешь", correct: false },
-      { letter: "B", text: "Запомнит все твои намёки за полгода 🎁", correct: true },
-      { letter: "C", text: "Подарит что-то для себя", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и утренний кофе. Без него она:",
-    options: [
-      { letter: "A", text: "Нормально функционирует", correct: false },
-      { letter: "B", text: "Лучше не подходить ☕", correct: true },
-      { letter: "C", text: "Пьёт чай вместо кофе", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка на вечеринке. Через 2 часа она:",
-    options: [
-      { letter: "A", text: "Душа компании, танцует до утра 🎤", correct: true },
-      { letter: "B", text: "«Может домой?»", correct: false },
-      { letter: "C", text: "Сидит в телефоне", correct: false }
-    ]
-  },
-  {
-    text: "Первый поцелуй с Бусинкой был в:",
-    options: [
-      { letter: "A", text: "Армении", correct: true },
-      { letter: "B", text: "Турции", correct: false },
-      { letter: "C", text: "России", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка смотрит на старые фото. Реакция:",
-    options: [
-      { letter: "A", text: "«Какая я была милая» 🥰", correct: false },
-      { letter: "B", text: "«Удали это немедленно!»", correct: true },
-      { letter: "C", text: "Ностальгирует и плачет", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и сериалы. Она:",
-    options: [
-      { letter: "A", text: "Смотрит по одной серии в день", correct: false },
-      { letter: "B", text: "Весь сезон за одну ночь 🍿", correct: true },
-      { letter: "C", text: "Не смотрит сериалы", correct: false }
-    ]
-  },
-  {
-    text: "Какая суперсила была бы у Бусинки?",
-    options: [
-      { letter: "A", text: "Телепортация (не опаздывать)", correct: true },
-      { letter: "B", text: "Чтение мыслей", correct: false },
-      { letter: "C", text: "Невидимость", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и термостат. Ей:",
-    options: [
-      { letter: "A", text: "Всегда жарко 🥵", correct: false },
-      { letter: "B", text: "Всегда холодно 🥶", correct: true },
-      { letter: "C", text: "Всегда комфортно", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка говорит «купи что хочешь». Ты:",
-    options: [
-      { letter: "A", text: "Покупаешь что хочешь", correct: false },
-      { letter: "B", text: "Уточняешь 3 раза, потому что это ловушка 😅", correct: true },
-      { letter: "C", text: "Ничего не покупаешь", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка получила букет цветов. Реакция:",
-    options: [
-      { letter: "A", text: "10 фото для инстаграма 📷", correct: true },
-      { letter: "B", text: "«Зачем тратил деньги?»", correct: false },
-      { letter: "C", text: "Спокойно поставит в вазу", correct: false }
-    ]
-  },
-  {
-    text: "Как Бусинка ведёт себя за рулём?",
-    options: [
-      { letter: "A", text: "Аккуратно и по правилам", correct: false },
-      { letter: "B", text: "Уверенно, но эмоционально 🚗", correct: true },
-      { letter: "C", text: "Она не водит", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и планирование поездки. Она:",
-    options: [
-      { letter: "A", text: "Таблица в Excel + расписание по часам 📋", correct: true },
-      { letter: "B", text: "Разберёмся на месте", correct: false },
-      { letter: "C", text: "Поручит всё тебе", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка в плохом настроении. Что НЕ надо говорить?",
-    options: [
-      { letter: "A", text: "«Успокойся»", correct: true },
-      { letter: "B", text: "«Я рядом»", correct: false },
-      { letter: "C", text: "«Хочешь поговорить?»", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и новая причёска. Если тебе не нравится:",
-    options: [
-      { letter: "A", text: "Скажешь честно", correct: false },
-      { letter: "B", text: "«Вау, тебе очень идёт!» (единственный верный ответ) 😇", correct: true },
-      { letter: "C", text: "Промолчишь", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и утро выходного дня. Она:",
-    options: [
-      { letter: "A", text: "Встаёт рано, полна энергии ☀️", correct: false },
-      { letter: "B", text: "Спит до обеда", correct: true },
-      { letter: "C", text: "Встаёт, но не разговаривает до кофе", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и Instagram. Сколько фото на аватарку?",
-    options: [
-      { letter: "A", text: "Первое попавшееся", correct: false },
-      { letter: "B", text: "Выбирает из 200+ фото неделю", correct: true },
-      { letter: "C", text: "У неё нет аватарки", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка говорит «я не обижаюсь». Это значит:",
-    options: [
-      { letter: "A", text: "Реально не обижается", correct: false },
-      { letter: "B", text: "Обижается, и ты это знаешь 💀", correct: true },
-      { letter: "C", text: "Уже забыла о чём речь", correct: false }
-    ]
-  },
-  {
-    text: "Бусинка и день рождения. Она хочет:",
-    options: [
-      { letter: "A", text: "Тихий вечер вдвоём", correct: false },
-      { letter: "B", text: "Сюрприз, вечеринку и внимание 🎂", correct: true },
-      { letter: "C", text: "Просто подарок", correct: false }
-    ]
-  }
+  { text: "Бусинка собирается на выход. Сколько времени ей нужно?", options: [
+    { letter: "A", text: "15 минут — быстро и красиво", correct: false },
+    { letter: "B", text: "«Ещё 5 минут» × 10 раз ⏰", correct: true },
+    { letter: "C", text: "Она всегда готова заранее", correct: false }]},
+  { text: "Бусинка говорит «я не голодная». Это значит:", options: [
+    { letter: "A", text: "Реально не голодная", correct: false },
+    { letter: "B", text: "Будет есть из твоей тарелки 🍽️", correct: true },
+    { letter: "C", text: "Через 10 минут попросит заехать за едой", correct: false }]},
+  { text: "Бусинка увидела милого кота на улице. Она:", options: [
+    { letter: "A", text: "«КОТИИИК!» и бежит тискать 🐱", correct: true },
+    { letter: "B", text: "Фоткает издалека", correct: false },
+    { letter: "C", text: "Проходит мимо", correct: false }]},
+  { text: "Бусинка злится. Лучшая стратегия:", options: [
+    { letter: "A", text: "Обнять и молчать 🤐", correct: false },
+    { letter: "B", text: "Спросить «что случилось?»", correct: false },
+    { letter: "C", text: "Дать ей время остыть", correct: true }]},
+  { text: "Бусинка выбирает что посмотреть. Это будет:", options: [
+    { letter: "A", text: "Романтический фильм 💕", correct: false },
+    { letter: "B", text: "Криминальная документалка", correct: true },
+    { letter: "C", text: "То же самое что и в прошлый раз", correct: false }]},
+  { text: "Бусинка в магазине одежды. Сколько вы там пробудете?", options: [
+    { letter: "A", text: "20 минут — она знает что хочет", correct: false },
+    { letter: "B", text: "2 часа минимум 🛍️", correct: false },
+    { letter: "C", text: "Пока магазин не закроется", correct: true }]},
+  { text: "Бусинка говорит «мне всё равно где ужинать». Это значит:", options: [
+    { letter: "A", text: "Реально всё равно", correct: false },
+    { letter: "B", text: "У неё уже есть конкретное место", correct: false },
+    { letter: "C", text: "Она хочет чтобы ты угадал", correct: true }]},
+  { text: "Бусинка делает селфи. Сколько попыток?", options: [
+    { letter: "A", text: "1-2 фото, и готово", correct: false },
+    { letter: "B", text: "Минимум 30, потом выберет первое 📸", correct: true },
+    { letter: "C", text: "Она не делает селфи", correct: false }]},
+  { text: "Что Бусинка делает перед сном?", options: [
+    { letter: "A", text: "Уходовые процедуры 30 минут 🧴", correct: true },
+    { letter: "B", text: "Сразу засыпает", correct: false },
+    { letter: "C", text: "Листает TikTok до 3 ночи", correct: false }]},
+  { text: "Бусинка заболела. Температура 38.0. Её поведение:", options: [
+    { letter: "A", text: "Работает как обычно", correct: false },
+    { letter: "B", text: "Полный постельный режим + сериалы 🤒", correct: true },
+    { letter: "C", text: "«Я умираю, принеси чай»", correct: false }]},
+  { text: "Любимая фраза Бусинки:", options: [
+    { letter: "A", text: "«Я люблю тебя» ❤️", correct: false },
+    { letter: "B", text: "«А ты меня любишь?»", correct: false },
+    { letter: "C", text: "«Купим мне кофе»", correct: true }]},
+  { text: "Бусинка плачет в кино. По какому поводу?", options: [
+    { letter: "A", text: "Грустная сцена 😢", correct: false },
+    { letter: "B", text: "Умерла собака в фильме", correct: true },
+    { letter: "C", text: "Любая мало-мальски трогательная сцена", correct: false }]},
+  { text: "Бусинка и шкаф. Одежды:", options: [
+    { letter: "A", text: "Мало, всё по капсулам", correct: false },
+    { letter: "B", text: "Полный шкаф, но «нечего надеть» 👗", correct: true },
+    { letter: "C", text: "Ровно столько сколько нужно", correct: false }]},
+  { text: "Бусинка просит сфоткать её. Ты должен:", options: [
+    { letter: "A", text: "Снять с первого раза", correct: false },
+    { letter: "B", text: "Снять 100 фото с разных ракурсов 📱", correct: true },
+    { letter: "C", text: "Предложить сделать селфи вместе", correct: false }]},
+  { text: "Бусинка на диете. Что произойдёт?", options: [
+    { letter: "A", text: "Продержится месяц 💪", correct: false },
+    { letter: "B", text: "Три дня, потом «мне нужен шоколад»", correct: false },
+    { letter: "C", text: "Перетянет тебя на диету тоже", correct: true }]},
+  { text: "Бусинка в плохом настроении. Что поможет?", options: [
+    { letter: "A", text: "Цветы 🌸", correct: true },
+    { letter: "B", text: "Вкусная еда", correct: false },
+    { letter: "C", text: "Оставить в покое", correct: false }]},
+  { text: "Бусинка и навигатор. Как она ориентируется?", options: [
+    { letter: "A", text: "Идеально, лучше GPS 🧭", correct: false },
+    { letter: "B", text: "«Поверни туда... нет, не туда!»", correct: true },
+    { letter: "C", text: "Полностью доверяет навигатору", correct: false }]},
+  { text: "Бусинка готовит. Результат:", options: [
+    { letter: "A", text: "Шедевр, достойный ресторана 👩‍🍳", correct: true },
+    { letter: "B", text: "Съедобно, но кухня в руинах", correct: false },
+    { letter: "C", text: "Она не готовит", correct: false }]},
+  { text: "Бусинка увидела паука. Реакция:", options: [
+    { letter: "A", text: "Спокойно выносит на улицу", correct: true },
+    { letter: "B", text: "Визг + «УБЕЙ ЕГО!!!» 🕷️", correct: false },
+    { letter: "C", text: "Фотографирует для инстаграма", correct: false }]},
+  { text: "Бусинка едет в отпуск. Чемодан:", options: [
+    { letter: "A", text: "Один маленький, всё продумано", correct: false },
+    { letter: "B", text: "Два огромных + ручная кладь", correct: true },
+    { letter: "C", text: "Купит всё на месте", correct: false }]},
+  { text: "Бусинка опаздывает. Что она скажет?", options: [
+    { letter: "A", text: "«Уже выхожу!» (ещё в халате)", correct: true },
+    { letter: "B", text: "Честно скажет сколько ещё нужно", correct: false },
+    { letter: "C", text: "Она никогда не опаздывает", correct: false }]},
+  { text: "Бусинка и комплименты. Как реагирует?", options: [
+    { letter: "A", text: "«Честно?!» и улыбается", correct: true },
+    { letter: "B", text: "«Да ладно, перестань» (но ей приятно) 😊", correct: false },
+    { letter: "C", text: "Не верит ни одному слову", correct: false }]},
+  { text: "Бусинка выбирает блюдо в ресторане. Стратегия:", options: [
+    { letter: "A", text: "Быстро, уже знает что хочет", correct: false },
+    { letter: "B", text: "Читает всё меню + спросит у официанта", correct: true },
+    { letter: "C", text: "«Мне то же что и тебе»", correct: false }]},
+  { text: "Бусинка и уборка дома. Как это выглядит?", options: [
+    { letter: "A", text: "Генеральная уборка каждые выходные", correct: false },
+    { letter: "B", text: "Убирает только когда ждёт гостей", correct: false },
+    { letter: "C", text: "«Это твоя очередь» 😏", correct: true }]},
+  { text: "Бусинка в очереди за кофе. Она закажет:", options: [
+    { letter: "A", text: "Капучино на кокосовом молоке без сахара", correct: true },
+    { letter: "B", text: "Что-то с 5 добавками и особым молоком ☕", correct: false },
+    { letter: "C", text: "Чай", correct: false }]},
+  { text: "Бусинка и шопинг онлайн. Корзина:", options: [
+    { letter: "A", text: "Только нужные вещи", correct: false },
+    { letter: "B", text: "Полная, но «я подумаю» и ничего не купит", correct: false },
+    { letter: "C", text: "Полная, и всё купит 🛒", correct: true }]},
+  { text: "Как Бусинка будит тебя утром?", options: [
+    { letter: "A", text: "Нежно, поцелуем 💋", correct: false },
+    { letter: "B", text: "«ВСТАВАЙ, ОПАЗДЫВАЕМ!»", correct: false },
+    { letter: "C", text: "Никак, спит дольше тебя", correct: true }]},
+  { text: "Бусинка и фитнес. Мотивация:", options: [
+    { letter: "A", text: "Здоровье и энергия", correct: true },
+    { letter: "B", text: "Фото в зеркале для сторис 💪", correct: false },
+    { letter: "C", text: "Она не ходит в зал", correct: false }]},
+  { text: "Бусинка танцует. Как это выглядит?", options: [
+    { letter: "A", text: "Профессионально, как в клипе 💃", correct: false },
+    { letter: "B", text: "Мило, но не в ритм", correct: false },
+    { letter: "C", text: "Она стесняется танцевать", correct: true }]},
+  { text: "Бусинка обиделась. Как ты узнаешь?", options: [
+    { letter: "A", text: "Скажет прямо", correct: false },
+    { letter: "B", text: "«Всё нормально» (ничего не нормально) 😤", correct: true },
+    { letter: "C", text: "Ты никогда не узнаешь", correct: false }]},
+  { text: "Бусинка и новый тренд в соцсетях. Она:", options: [
+    { letter: "A", text: "Первая попробует 📱", correct: false },
+    { letter: "B", text: "Подождёт пока все сделают", correct: false },
+    { letter: "C", text: "Ей всё равно на тренды", correct: true }]},
+  { text: "Бусинка выбирает подарок тебе. Стратегия:", options: [
+    { letter: "A", text: "Спросит напрямую что хочешь", correct: false },
+    { letter: "B", text: "Запомнит все твои намёки за полгода 🎁", correct: false },
+    { letter: "C", text: "Подарит что-то для себя", correct: true }]},
+  { text: "Бусинка и утренний кофе. Без него она:", options: [
+    { letter: "A", text: "Нормально функционирует", correct: false },
+    { letter: "B", text: "Лучше не подходить ☕", correct: true },
+    { letter: "C", text: "Пьёт чай вместо кофе", correct: false }]},
+  { text: "Бусинка на вечеринке. Через 2 часа она:", options: [
+    { letter: "A", text: "Душа компании, танцует до утра 🎤", correct: true },
+    { letter: "B", text: "«Может домой?»", correct: false },
+    { letter: "C", text: "Сидит в телефоне", correct: false }]},
+  { text: "Куда она точно не поедет:", options: [
+    { letter: "A", text: "Египет", correct: false },
+    { letter: "B", text: "Бали", correct: false },
+    { letter: "C", text: "Индия", correct: true }]},
+  { text: "Бусинка смотрит на старые фото. Реакция:", options: [
+    { letter: "A", text: "«Какая я была милая» 🥰", correct: true },
+    { letter: "B", text: "«Удали это немедленно!»", correct: false },
+    { letter: "C", text: "Ностальгирует и плачет", correct: false }]},
+  { text: "Бусинка и сериалы. Она:", options: [
+    { letter: "A", text: "Смотрит по одной серии в день", correct: false },
+    { letter: "B", text: "Весь сезон за одну ночь 🍿", correct: true },
+    { letter: "C", text: "Не смотрит сериалы", correct: false }]},
+  { text: "Какая суперсила была бы у Бусинки?", options: [
+    { letter: "A", text: "Телепортация (не опаздывать)", correct: false },
+    { letter: "B", text: "Чтение мыслей", correct: true },
+    { letter: "C", text: "Невидимость", correct: false }]},
+  { text: "Бусинка и термостат. Ей:", options: [
+    { letter: "A", text: "Всегда жарко 🥵", correct: false },
+    { letter: "B", text: "Всегда холодно 🥶", correct: true },
+    { letter: "C", text: "Всегда комфортно", correct: false }]},
+  { text: "Бусинка говорит «купи что хочешь». Ты:", options: [
+    { letter: "A", text: "Покупаешь что хочешь", correct: false },
+    { letter: "B", text: "Уточняешь 3 раза, потому что это ловушка 😅", correct: true },
+    { letter: "C", text: "Ничего не покупаешь", correct: false }]},
+  { text: "Бусинка получила букет цветов. Реакция:", options: [
+    { letter: "A", text: "10 фото для инстаграма 📷", correct: false },
+    { letter: "B", text: "«Зачем тратил деньги?»", correct: false },
+    { letter: "C", text: "Спокойно поставит в вазу", correct: true }]},
+  { text: "Как Бусинка ведёт себя за рулём?", options: [
+    { letter: "A", text: "Аккуратно и по правилам", correct: false },
+    { letter: "B", text: "Уверенно, но эмоционально 🚗", correct: true },
+    { letter: "C", text: "Она не водит", correct: false }]},
+  { text: "Бусинка и планирование поездки. Она:", options: [
+    { letter: "A", text: "Таблица в Excel + расписание по часам 📋", correct: false },
+    { letter: "B", text: "Разберёмся на месте", correct: false },
+    { letter: "C", text: "Поручит всё тебе", correct: true }]},
+  { text: "Бусинка в плохом настроении. Что НЕ надо говорить?", options: [
+    { letter: "A", text: "«Успокойся»", correct: true },
+    { letter: "B", text: "«Я рядом»", correct: false },
+    { letter: "C", text: "«Хочешь поговорить?»", correct: false }]},
+  { text: "Бусинка и новая причёска. Если тебе не нравится:", options: [
+    { letter: "A", text: "Скажешь честно", correct: false },
+    { letter: "B", text: "«Вау, тебе очень идёт!» (единственный верный ответ) 😇", correct: true },
+    { letter: "C", text: "Промолчишь", correct: false }]},
+  { text: "Бусинка и утро выходного дня. Она:", options: [
+    { letter: "A", text: "Встаёт рано, полна энергии ☀️", correct: false },
+    { letter: "B", text: "Спит до обеда", correct: true },
+    { letter: "C", text: "Встаёт, но не разговаривает до кофе", correct: false }]},
+  { text: "Бусинка и Instagram. Сколько фото на аватарку?", options: [
+    { letter: "A", text: "Столетней давности", correct: true },
+    { letter: "B", text: "Выбирает из 200+ фото неделю", correct: false },
+    { letter: "C", text: "У неё нет аватарки", correct: false }]},
+  { text: "Бусинка говорит «я не обижаюсь». Это значит:", options: [
+    { letter: "A", text: "Реально не обижается", correct: false },
+    { letter: "B", text: "Обижается, и ты это знаешь 💀", correct: true },
+    { letter: "C", text: "Уже забыла о чём речь", correct: false }]},
+  { text: "Бусинка и день рождения. Она хочет:", options: [
+    { letter: "A", text: "Тихий вечер вдвоём", correct: false },
+    { letter: "B", text: "Сюрприз, вечеринку и внимание 🎂", correct: true },
+    { letter: "C", text: "Просто подарок", correct: false }]},
+  { text: "Бусинка боится:", options: [
+    { letter: "A", text: "Одиночества", correct: true },
+    { letter: "B", text: "Бедности", correct: false },
+    { letter: "C", text: "Пьяную Юлю", correct: false }]}
 ];
 
 let currentQuestion = 0;
